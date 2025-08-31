@@ -3,6 +3,8 @@ import dotenv from "dotenv"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
+import { router as urlRoutes } from "./routes/url.route.js";
+
 
 dotenv.config()
 
@@ -11,7 +13,6 @@ const PORT = process.env.PORT;
 const app = express()
 
 app.use(
-  // configs
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -22,9 +23,10 @@ app.use(
     limit: "10mb"
   }),
   cookieParser(),
-
-  // routes
 );
+
+// routes
+app.use("/urls", urlRoutes)
 
 app.get("/", (_req, res) => {
   res.json({
