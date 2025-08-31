@@ -18,10 +18,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true
   }),
-  express.urlencoded({
-    extended: true,
-    limit: "10mb"
-  }),
+   express.json(),
   cookieParser(),
 );
 
