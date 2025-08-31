@@ -3,11 +3,10 @@ import { Url } from "../models/url.model.js";
 import { ERROR_MESSAGES, HTTP_STATUS } from "../lib/constants.js";
 
 export const addUrl = async (req: Request, res: Response): Promise<void> => {
-    const { url, fakeUrl, ads, disabled, expiresAt } = req.body;
+    const { url, title, fakeUrl, ads, disabled, expiresAt } = req.body;
      
     try {
-        console.log(req.body)
-        if (!url || !fakeUrl) {
+        if (!url || !title) {
             res
                 .status(HTTP_STATUS.BAD_REQUEST)
                 .json({ message: ERROR_MESSAGES.REQUIRED_FIELDS });
@@ -16,6 +15,7 @@ export const addUrl = async (req: Request, res: Response): Promise<void> => {
 
         const newUrl= new Url({
             url: url,
+            title: title,
             fakeUrl: fakeUrl,
             ads: ads,
             disabled: disabled,
@@ -125,6 +125,32 @@ export const deleteUrl = async (req: Request, res: Response): Promise<void> => {
         error instanceof Error
             ? error.message
             : ERROR_MESSAGES.INTERNAL_SERVER_ERROR;
+        res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: errorMessage });
+    }
+};
+
+export const getUrlByFakeUrl = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    try {
+        const { id } = req.params;
+
+        const url = await Url.findOne({ fakeUrl: 'http://localhost:3001/r/' + id });
+
+        if (!url) {
+            res
+                .status(HTTP_STATUS.BAD_REQUEST)
+                .json({ message: ERROR_MESSAGES.NOT_FOUND });
+            return;
+        }
+
+        res.status(HTTP_STATUS.OK).json(url);
+    } catch (error) {
+        const errorMessage =
+            error instanceof Error
+                ? error.message
+                : ERROR_MESSAGES.INTERNAL_SERVER_ERROR;
         res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: errorMessage });
     }
 };

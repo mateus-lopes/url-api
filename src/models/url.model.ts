@@ -12,6 +12,10 @@ const urlSchema = new mongoose.Schema<UrlDocument>(
         fakeUrl: {
             type: String,
             required: true,
+        },
+        title: {
+            type: String,
+            required: true,
             unique: true
         },
         ads: {
