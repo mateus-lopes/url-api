@@ -1,7 +1,7 @@
 export const ERROR_MESSAGES = {
-  REQUIRED_FIELDS: "All fields are required.",
-  INTERNAL_SERVER_ERROR: "Internal server error.",
-  NOT_FOUND: "url not found."
+  REQUIRED_FIELDS: "Todos os campos são obrigatórios.",
+  INTERNAL_SERVER_ERROR: "Erro interno do servidor.",
+  NOT_FOUND: "url não foi encontrado"
 } as const;
 
 export const HTTP_STATUS = {
