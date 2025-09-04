@@ -13,6 +13,14 @@ export const addUrl = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
+        const existingUrl = await Url.findOne({ title: title });
+        if (existingUrl) {
+            res
+                .status(HTTP_STATUS.CONFLICT)
+                .json({ message: ERROR_MESSAGES.URL_ALREADY_EXISTS });
+            return;
+        }
+
         const newUrl= new Url({
             url: url,
             title: title,

@@ -1,7 +1,8 @@
 export const ERROR_MESSAGES = {
   REQUIRED_FIELDS: "Todos os campos são obrigatórios.",
   INTERNAL_SERVER_ERROR: "Erro interno do servidor.",
-  NOT_FOUND: "url não foi encontrado"
+  NOT_FOUND: "url não foi encontrado",
+  URL_ALREADY_EXISTS: "URL com este título já existe.",
 } as const;
 
 export const HTTP_STATUS = {
