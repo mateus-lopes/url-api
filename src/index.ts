@@ -2,6 +2,9 @@ import express from "express";
 import dotenv from "dotenv"
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.config.js';
 import { connectDB } from "./lib/db.js";
 import { router as urlRoutes } from "./routes/url.route.js";
 
@@ -18,16 +21,21 @@ app.use(
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true
   }),
-   express.json(),
+  express.json(),
   cookieParser(),
 );
 
 // routes
 app.use("/urls", urlRoutes)
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/", (_req, res) => {
   res.json({
     message: "URL API is running!",
+    documentation: "/swagger",
+    repo_backend: "https://github.com/mateus-lopes/url-api",
+    repo_frontend: "https://github.com/mateus-lopes/url-ui",
+    author: "https://github.com/mateus-lopes",
   });
 });
 
